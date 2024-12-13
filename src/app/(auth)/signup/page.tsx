@@ -1,13 +1,8 @@
 import React from "react";
-import SignupForm from "@/components/auth/SignupForm";
-import AuthWrapper from "@/components/auth/AuthWrapper";
+import Signup from "@/components/auth/signup/signup";
 
 const SignupPage = () => {
-  return (
-    <AuthWrapper>
-      <SignupForm />
-    </AuthWrapper>
-  );
+  return <Signup />;
 };
 
 export default SignupPage;

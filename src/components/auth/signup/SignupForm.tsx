@@ -1,12 +1,50 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { Button, CircularProgress, FormLabel, TextField } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-export default function SignupForm({ onSubmit, isLoading }: any) {
+interface SignupFormProps {
+  onSubmit: (values: {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => void;
+  isLoading: boolean;
+}
+
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Confirm Password is required"),
+});
+
+const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading }) => {
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
+  });
+
   return (
     <div className="mx-auto max-w-sm space-y-6">
       <div className="space-y-2 text-center">
@@ -15,17 +53,21 @@ export default function SignupForm({ onSubmit, isLoading }: any) {
           Create an account to get started
         </p>
       </div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <div className="space-y-4">
           <div className="space-y-2 flex flex-col">
             <FormLabel htmlFor="username">Username</FormLabel>
             <TextField
               id="username"
               name="username"
-              required
               placeholder="Jon Doe"
               type="text"
               size="small"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
             />
           </div>
           <div className="space-y-2 flex flex-col">
@@ -34,9 +76,13 @@ export default function SignupForm({ onSubmit, isLoading }: any) {
               id="email"
               name="email"
               placeholder="m@example.com"
-              required
               type="email"
               size="small"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
             />
           </div>
           <div className="space-y-2 flex flex-col">
@@ -44,19 +90,32 @@ export default function SignupForm({ onSubmit, isLoading }: any) {
             <TextField
               id="password"
               name="password"
-              required
               type="password"
               size="small"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
             />
           </div>
           <div className="space-y-2 flex flex-col">
-            <FormLabel htmlFor="confirm-password">Confirm Password</FormLabel>
+            <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
             <TextField
-              id="confirm-password"
-              name="confirm-password"
-              required
+              id="confirmPassword"
+              name="confirmPassword"
               type="password"
               size="small"
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.confirmPassword &&
+                Boolean(formik.errors.confirmPassword)
+              }
+              helperText={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
             />
           </div>
           <Button
@@ -71,8 +130,11 @@ export default function SignupForm({ onSubmit, isLoading }: any) {
               },
             }}
           >
-            {isLoading && <CircularProgress />}
-            Sign Up
+            {isLoading ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              "Sign Up"
+            )}
           </Button>
         </div>
       </form>
@@ -131,4 +193,6 @@ export default function SignupForm({ onSubmit, isLoading }: any) {
       </p>
     </div>
   );
-}
+};
+
+export default SignupForm;
