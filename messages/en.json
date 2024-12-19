@@ -1,6 +1,44 @@
 {
   "welcome": "Home Page",
-  "english": "English",
-  "arabic": "Arabic",
-  "spanish": "Spanish"
+  "login": {
+    "heading": "Login to Account",
+    "description": "Please enter your email address to log in to your account.",
+    "dontHaveAccount": "Don't have an account?",
+    "signUpLinkText": "Sign up",
+    "or": "Or",
+    "signinGoogle": "Sign in with Google",
+    "signinApple": "Sign in with Apple"
+  },
+  "signup": {
+    "heading": "Create an Account",
+    "description": "Please enter your email address to create your account.",
+    "createAccountText": "By Clicking on <b>“Create Account”</b> you accept our <a1>Terms & Conditions</a1> and <a2>Privacy Policy</a2>.",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLinkText": "Login",
+    "continueWith": "Or Continue With",
+    "signupGoogle": "Sign up with Google",
+    "signupApple": "Sign up with Apple",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "passwordStrength": "Password must be at least 6 characters",
+    "createAccount": "Create account"
+  },
+  "reset": {
+    "heading": "Recover Your Password",
+    "description": "We'll send you a link to your email. Follow the instructions to reset your password.",
+    "setPassword": "Set Password",
+    "backToLogin": "Back to login",
+    "btnText": "Send Link",
+    "resetHeading": "Reset Password",
+    "resetDescription": "Please provide your desired new password and confirm it for verification."
+  },
+  "home": {
+    "imageTestingHead": "Image Testing",
+    "imageTestingDesc": "We always want to hear from you! Let us know how we can best help you and we'll do our very best.",
+    "textTestingHead": "Text Testing",
+    "textTestingDesc": "We always want to hear from you! Let us know how we can best help you and we'll do our very best.",
+    "btnText": "Start Now"
+  }
 }

@@ -11,24 +11,22 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     const router = useRouter();
     const pathname = usePathname();
 
-    useEffect(() => {
-      if (user && (pathname === "/login" || pathname === "/signup")) {
-        // Redirect authenticated users away from login and signup pages
-        router.replace("/");
-      } else if (!user && pathname !== "/login" && pathname !== "/signup") {
-        // Redirect unauthenticated users to login if trying to access protected routes
-        router.replace("/login");
-      }
-    }, [user, router, pathname]);
+    const isPublicRoute = ["/login", "/signup", "/reset-password"].includes(
+      pathname || ""
+    );
 
-    if (
-      (!user && pathname !== "/login" && pathname !== "/signup") ||
-      (user && (pathname === "/login" || pathname === "/signup"))
-    ) {
+    useEffect(() => {
+      if (user && isPublicRoute) {
+        router.replace("/"); // Redirect logged-in users away from public routes
+      } else if (!user && !isPublicRoute) {
+        router.replace("/login"); // Redirect non-logged-in users trying to access protected routes
+      }
+    }, [user, router, pathname, isPublicRoute]);
+
+    if ((!user && !isPublicRoute) || (user && isPublicRoute)) {
       return null; // Prevent rendering while redirecting
     }
 
-    // Render the wrapped component if conditions are met
     return <WrappedComponent {...props} />;
   };
 

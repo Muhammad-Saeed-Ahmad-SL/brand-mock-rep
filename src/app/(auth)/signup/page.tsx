@@ -1,8 +1,10 @@
+"use client";
+import withAuth from "@/hooks/useAuth";
+import Signup from "@/views/signup";
 import React from "react";
-import Signup from "@/components/auth/signup/signup";
 
 const SignupPage = () => {
   return <Signup />;
 };
 
-export default SignupPage;
+export default withAuth(SignupPage);

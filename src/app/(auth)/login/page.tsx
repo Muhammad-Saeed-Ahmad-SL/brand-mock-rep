@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Login from "@/components/auth/login/login";
+import Login from "@/views/login";
 import withAuth from "@/hooks/useAuth";
 
 const LoginPage = () => {
